@@ -1,0 +1,22 @@
+# Copyright (c) 2026 Advanced Software and AI Solutions LLC. All rights reserved.
+# Optional. Docker is never required to run Payment Reminder Letters.
+#
+# Usage (NODE_VERSION = major from `node --version`):
+#   NODE_VERSION=22 docker compose up --build
+# Then open http://localhost:8080/paymentreminders/
+
+services:
+  payment-reminder-letters:
+    build:
+      context: .
+      args:
+        NODE_VERSION: ${NODE_VERSION:?Set NODE_VERSION to the major from node --version}
+    ports:
+      - "8080:8080"
+    read_only: true
+    tmpfs:
+      - /tmp
+      - /var/cache/nginx
+      - /var/run
+    security_opt:
+      - no-new-privileges:true

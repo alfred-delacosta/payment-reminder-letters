@@ -1,0 +1,357 @@
+/*
+ * Copyright (c) 2026 Advanced Software and AI Solutions LLC. All rights reserved.
+ *
+ * Scoped print report styles (rp- prefix). Hidden on screen; shown under
+ * @media print while the app root is hidden. No MUI dependency.
+ */
+
+/* Screen: keep the report out of layout and assistive tech. */
+.rp-root {
+  display: none !important;
+}
+
+@media print {
+  /* Letter with 0.65 in margins. */
+  @page {
+    size: letter;
+    margin: 0.65in;
+
+    /* Margin boxes: supported in some engines (e.g. Prince); ignored elsewhere. */
+    @bottom-right {
+      content: "Page " counter(page) " of " counter(pages);
+      font-size: 8pt;
+      color: #000;
+      font-family:
+        system-ui,
+        -apple-system,
+        "Segoe UI",
+        Roboto,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+    }
+  }
+
+  /* Hide the live app; show only the report portal. */
+  #root {
+    display: none !important;
+  }
+
+  .rp-root {
+    display: block !important;
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+    color: #000;
+    background: #fff;
+    font-family:
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      "Helvetica Neue",
+      Arial,
+      sans-serif;
+    font-size: 10.5pt;
+    line-height: 1.35;
+    -webkit-print-color-adjust: economy;
+    print-color-adjust: economy;
+  }
+
+  .rp-root *,
+  .rp-root *::before,
+  .rp-root *::after {
+    box-sizing: border-box;
+  }
+
+  .rp-cover {
+    break-inside: avoid;
+    margin-bottom: 0.35in;
+  }
+
+  .rp-brand-lockup {
+    display: block;
+    height: 36px;
+    width: auto;
+    max-width: 100%;
+    margin-bottom: 0.2in;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .rp-title {
+    font-size: 18pt;
+    font-weight: 700;
+    margin: 0 0 0.08in;
+    color: #000;
+  }
+
+  .rp-subtitle {
+    font-size: 11pt;
+    font-weight: 400;
+    margin: 0 0 0.08in;
+    color: #000;
+  }
+
+  .rp-generated {
+    font-size: 9pt;
+    margin: 0 0 0.2in;
+    color: #222;
+  }
+
+  .rp-summary {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.08in 0.25in;
+    break-inside: avoid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rp-summary-item {
+    break-inside: avoid;
+    margin: 0;
+    padding: 0.04in 0;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .rp-summary-label {
+    display: block;
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: #333;
+  }
+
+  .rp-summary-value {
+    display: block;
+    font-size: 11pt;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: #000;
+  }
+
+  .rp-section {
+    margin: 0.28in 0 0;
+  }
+
+  .rp-section-heading {
+    font-size: 13pt;
+    font-weight: 700;
+    margin: 0 0 0.1in;
+    color: #000;
+    break-after: avoid;
+  }
+
+  .rp-h3 {
+    font-size: 11pt;
+    font-weight: 600;
+    margin: 0.16in 0 0.08in;
+    color: #000;
+    break-after: avoid;
+  }
+
+  .rp-kv {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .rp-kv-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.2in;
+    padding: 0.03in 0;
+    border-bottom: 1px solid #ddd;
+    break-inside: avoid;
+  }
+
+  .rp-kv-label {
+    flex: 1 1 auto;
+    color: #222;
+  }
+
+  .rp-kv-value {
+    flex: 0 0 auto;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    text-align: right;
+    color: #000;
+  }
+
+  .rp-paragraphs p {
+    margin: 0 0 0.08in;
+  }
+
+  .rp-table-wrap {
+    margin: 0 0 0.12in;
+  }
+
+  .rp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 9pt;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rp-table caption {
+    caption-side: top;
+    text-align: left;
+    font-weight: 600;
+    font-size: 9.5pt;
+    margin-bottom: 0.06in;
+    color: #000;
+  }
+
+  .rp-table th,
+  .rp-table td {
+    border: 1px solid #bbb;
+    padding: 0.04in 0.06in;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .rp-table th {
+    background: #f0f0f0;
+    font-weight: 600;
+    color: #000;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .rp-table td.rp-num {
+    text-align: right;
+  }
+
+  .rp-table tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .rp-figure {
+    margin: 0.16in 0;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .rp-figure img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .rp-figcaption {
+    font-size: 9pt;
+    font-weight: 600;
+    margin: 0.04in 0 0.02in;
+    color: #000;
+  }
+
+  .rp-chart-summary {
+    font-size: 8.5pt;
+    margin: 0;
+    color: #222;
+  }
+
+  .rp-appendix {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .rp-appendix .rp-table-wrap {
+    break-inside: auto;
+  }
+
+  .rp-appendix .rp-chunk + .rp-chunk {
+    break-before: page;
+    page-break-before: always;
+  }
+
+  .rp-assumptions {
+    margin-top: 0.28in;
+    break-inside: avoid;
+  }
+
+  .rp-assumptions ul {
+    margin: 0.06in 0 0;
+    padding-left: 1.1em;
+  }
+
+  .rp-assumptions li {
+    margin: 0.03in 0;
+    break-inside: avoid;
+  }
+
+  .rp-disclaimer {
+    margin-top: 0.2in;
+    padding: 0.1in;
+    border: 1px solid #999;
+    font-size: 8.5pt;
+    break-inside: avoid;
+  }
+
+  .rp-disclaimer p {
+    margin: 0;
+  }
+
+  .rp-credit {
+    margin-top: 0.28in;
+    padding-top: 0.12in;
+    border-top: 1px solid #999;
+    display: flex;
+    align-items: center;
+    gap: 0.12in;
+    break-inside: avoid;
+  }
+
+  .rp-credit-logo {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .rp-credit-text {
+    font-size: 9pt;
+    margin: 0;
+  }
+
+  .rp-credit-text a {
+    color: #000;
+    text-decoration: underline;
+  }
+
+  .rp-credit-line {
+    display: block;
+    margin-top: 0.04in;
+    font-size: 8.5pt;
+    color: #222;
+  }
+
+  /*
+   * Running footer fallback where @page margin boxes are unsupported.
+   * Bottom margin on @page already reserves space; keep this short.
+   */
+  .rp-running-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0.35in;
+    font-size: 8pt;
+    color: #333;
+    text-align: right;
+    padding-top: 0.08in;
+    border-top: 0.5pt solid #ccc;
+  }
+
+  .rp-running-footer-inner {
+    max-width: 100%;
+  }
+}
