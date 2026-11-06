@@ -23,6 +23,7 @@ describe("latefee", () => {
     expect(result.feeCents).toBe(3600);
     expect(result.newTotalCents).toBe(243_600);
     expect(result.formulaLine).toMatch(/1\.5%/);
+    expect(result.formulaLine).toMatch(/2400\.00 \+ .*36\.00 = 2436\.00/);
     expect(result.letterLine).toMatch(/\$36\.00/);
     expect(result.letterLine).toMatch(/\$2,436\.00/);
   });
@@ -36,7 +37,7 @@ describe("latefee", () => {
       asOfDate: parseIsoDate("2026-10-10"),
     });
     expect(flat.feeCents).toBe(2500);
-    expect(flat.formulaLine).toMatch(/Flat late fee/);
+    expect(flat.formulaLine).toMatch(/100\.00 \+ .*25\.00 = 125\.00/);
 
     const pct = computeLateFee({
       mode: "percentOnce",
@@ -47,6 +48,7 @@ describe("latefee", () => {
     });
     expect(pct.feeCents).toBe(2000);
     expect(pct.formulaLine).toMatch(/10%/);
+    expect(pct.formulaLine).toMatch(/200\.00 \+ .*20\.00 = 220\.00/);
   });
 
   it("returns zero fee when not past due or under a month", () => {
