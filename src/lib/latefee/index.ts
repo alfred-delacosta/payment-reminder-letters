@@ -80,20 +80,23 @@ function rawFeeCents(input: LateFeeInput, billableDays: number, months: number):
 function buildFormula(
   input: LateFeeInput,
   feeCents: Cents,
+  newTotalCents: Cents,
   months: number,
   billableDays: number,
 ): string {
   const amount = centsToDollarString(input.amountCents);
+  const fee = centsToDollarString(feeCents);
+  const total = centsToDollarString(newTotalCents);
   if (billableDays <= 0 || feeCents === 0) {
     return `No late fee yet (within grace or not past due). Amount owed ${amount}.`;
   }
   switch (input.mode) {
     case "flatOnce":
-      return `Flat late fee ${centsToDollarString(input.flatFeeCents ?? 0)} on amount ${amount} = ${centsToDollarString(feeCents)}.`;
+      return `Amount ${amount} + late fee ${fee} = ${total}.`;
     case "percentOnce":
-      return `${input.percent}% of ${amount} = ${centsToDollarString(feeCents)}.`;
+      return `${input.percent}% of ${amount} = late fee ${fee}; ${amount} + ${fee} = ${total}.`;
     case "percentPerMonth":
-      return `${input.percent}% of ${amount} x ${months} month(s) = ${centsToDollarString(feeCents)}.`;
+      return `${input.percent}% of ${amount} x ${months} month(s) = late fee ${fee}; ${amount} + ${fee} = ${total}.`;
   }
 }
 
@@ -130,7 +133,7 @@ export function computeLateFee(input: LateFeeInput): LateFeeResult {
   fee = Math.max(0, fee - paidSoFar);
 
   const newTotal = input.amountCents + fee;
-  const formulaLine = buildFormula(input, fee, months, billableDays);
+  const formulaLine = buildFormula(input, fee, newTotal, months, billableDays);
   const letterLine =
     fee > 0
       ? `A late fee of ${formatCentsUsd(fee)} brings the total to ${formatCentsUsd(newTotal)}.`
